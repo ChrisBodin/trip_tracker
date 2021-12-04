@@ -14,11 +14,6 @@ class UsersController < ApplicationController
     render component: 'UserNew', props: { user: @user }
   end
 
-  def edit
-    @user = User.find(params[:id])
-    render component: 'UserEdit', props: { user: @user }
-  end
-
   def create
     @user = User.new(user_params)
     if @user.save
@@ -27,13 +22,19 @@ class UsersController < ApplicationController
       render component: 'UserNew', props: { user: @user }
     end
   end
+
+  def edit
+    @user = User.find(params[:id])
+    render component: 'UserEdit', props: { user: @user }
+  end
   
   def update
     @user = User.find(params[:id])
-    if @user.update(user_params)
-      redirect_to root_path
-    else  
-      render component: 'UserEdit', props: { user: @user }
+      if @user.update(user_params)
+        redirect_to root_path
+      else  
+        render component: 'UserEdit', props: { user: @user }
+    end
   end
 
   def destroy
